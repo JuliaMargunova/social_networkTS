@@ -5,23 +5,22 @@ import Navbar from '../../../Projects/social_networkTS/src/components/Navbar/Nav
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import { Route, Routes } from 'react-router-dom';
-import { RootStateType} from "./redux/state";
+import {RootStateType, StoreType} from "./redux/state";
 import {FC} from "react";
 
 type PropsType = {
-    state:RootStateType
-    addPost:()=>void
-    changeMessagePost:(message:string)=>void
+    store:StoreType
 }
 const App:FC<PropsType> = (props) => {
+   const state = props.store.getState();
     return (
             <div className='app-wrapper'>
                 <Header />
                 <Navbar />
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/profile' element={<Profile profilePage={props.state.profilePage} addPost={props.addPost} changeMessagePost={props.changeMessagePost} />} />
-                        <Route path='/dialogs' element={<Dialogs messages = {props.state.dialogsPage.messages} dialogs={props.state.dialogsPage.dialogs} />} />
+                        <Route path='/profile' element={<Profile profilePage={state.profilePage} addPost={props.store.addPost.bind(props.store)} changeMessagePost={props.store.changeMessagePost.bind(props.store)} />} />
+                        <Route path='/dialogs' element={<Dialogs messages = {state.dialogsPage.messages} dialogs={state.dialogsPage.dialogs} />} />
                     </Routes>
                 </div>
             </div>
