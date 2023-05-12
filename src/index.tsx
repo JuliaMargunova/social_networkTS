@@ -2,10 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import state, {addPost} from './redux/state';
-import {rerenderEntireTree} from "./render";
+import state, {addPost, changeMessagePost, RootStateType, subscribe} from './redux/state';
+import {BrowserRouter} from "react-router-dom";
 
-rerenderEntireTree(state);
+let rerenderEntireTree = () => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <App state={state} addPost={addPost} changeMessagePost={changeMessagePost}/>
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+}
+
+rerenderEntireTree();
+subscribe(rerenderEntireTree);
 
 /*const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

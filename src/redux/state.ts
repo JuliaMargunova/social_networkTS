@@ -1,5 +1,8 @@
 import React from "react";
-import {rerenderEntireTree} from "../render";
+
+export let rerenderEntireTree = () => {
+
+}
 
 export type MessagesType = {
     id: number,
@@ -75,12 +78,16 @@ export const addPost = () => {
     const newPost: PostType = {id: 4, message: state.profilePage.newPostText, likesCount: 8};
     state.profilePage.posts.push(newPost);
     state.profilePage.newPostText = '';
-    rerenderEntireTree(state);
+    rerenderEntireTree();
 }
 
-export const changeMessagePost = (messagePost:string)=>{
+export const changeMessagePost = (messagePost: string) => {
     state.profilePage.newPostText = messagePost;
-    rerenderEntireTree(state);
+    rerenderEntireTree();
+}
+
+export const subscribe = (observer: () => void) => {
+    rerenderEntireTree = observer;
 }
 
 export default state;
