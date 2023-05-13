@@ -46,7 +46,7 @@ export type StoreType = {
     _callSubscriber: () => void,
     dispatch: (action: ActionsTypes) => void
 }
-export type ActionsTypes = ReturnType<typeof addPostAC > | ReturnType<typeof updateNewPostTextAC> |ReturnType<typeof updateNewMessageTextAC>|ReturnType<typeof addMessageAC>;
+export type ActionsTypes = ReturnType<typeof addPostAC > | ReturnType<typeof updateNewPostTextAC> |ReturnType<typeof updateNewMessageTextAC>|ReturnType<typeof sendMessageAC>;
 
 export const addPostAC = () => {
     return {type: 'ADD-POST'} as const
