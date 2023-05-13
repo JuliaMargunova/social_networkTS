@@ -2,18 +2,20 @@ import React, {ChangeEvent, FC, RefObject} from "react";
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogsItem/DialogItem";
 import Message from "./Message/Message";
+
 import {
-    ActionsTypes,
+    DialogsActionTypes,
     DialogsType,
-    MessagesType
-} from "../../redux/state";
-import {sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogs-reducer";
+    MessagesType,
+    sendMessageAC,
+    updateNewMessageTextAC
+} from "../../redux/dialogs-reducer";
 
 type PropsType ={
     dialogs:DialogsType[]
     messages:MessagesType[],
     message:string
-    dispatch:(action:ActionsTypes)=>void
+    dispatch:(action:DialogsActionTypes)=>void
 }
 const Dialogs:FC<PropsType> = (props) => {
 

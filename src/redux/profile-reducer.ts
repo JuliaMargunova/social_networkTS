@@ -1,9 +1,26 @@
 import React from 'react'
-import {ActionsTypes, MessagesType, PostType, ProfilePageType} from "./state";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
-export const profileReducer = (state: ProfilePageType, action: any): ProfilePageType => {
+export type ProfilePageType = {
+    posts: PostType[],
+    newPostText: string
+}
+export type PostType = {
+    id: number,
+    message: string,
+    likesCount: number
+}
+const initialState = {
+    posts: [
+        {id: 1, message: "hi", likesCount: 10},
+        {id: 2, message: "hello", likesCount: 12},
+        {id: 3, message: "yo", likesCount: 2}
+    ],
+    newPostText: ""
+}
+
+export const profileReducer = (state: ProfilePageType = initialState, action: any): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {id: 4, message: state.newPostText, likesCount: 8};
@@ -18,7 +35,7 @@ export const profileReducer = (state: ProfilePageType, action: any): ProfilePage
     }
 }
 
-export type ProfileActionTypes = ReturnType<typeof addPostAC > | ReturnType<typeof updateNewPostTextAC >;
+export type ProfileActionTypes = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC>;
 export const addPostAC = () => {
     return {type: ADD_POST} as const
 }

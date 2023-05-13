@@ -1,9 +1,37 @@
 import React from 'react'
-import {DialogsPageType, MessagesType, PostType} from "./state";
 
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
 const SEND_MESSAGE = "SEND-MESSAGE"
-export const dialogsReducer = (state: DialogsPageType, action: any):DialogsPageType => {
+
+export type DialogsPageType = {
+    dialogs: DialogsType[],
+    messages: MessagesType[],
+    newMessage: string
+}
+export type MessagesType = {
+    id: number,
+    message: string
+}
+export type DialogsType = {
+    id: number,
+    name: string
+}
+const initialState  =  {
+    dialogs:
+        [
+            {id: 1, name: "Yuli",},
+            {id: 2, name: "Valery",},
+            {id: 3, name: "Olga",},
+            {id: 4, name: "Kat",}
+        ],
+            messages: [
+        {id: 1, message: "hi"},
+        {id: 2, message: "Hello"},
+        {id: 3, message: "Love you"}
+    ],
+        newMessage: "Hello my friend"
+}
+export const dialogsReducer = (state: DialogsPageType = initialState, action: any):DialogsPageType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
             state.newMessage = action.newMessage ? action.newMessage : "";

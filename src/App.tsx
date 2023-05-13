@@ -5,7 +5,7 @@ import Navbar from '../../../Projects/social_networkTS/src/components/Navbar/Nav
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import { Route, Routes } from 'react-router-dom';
-import {RootStateType, StoreType} from "./redux/state";
+import { StoreType} from "./redux/redux-store";
 import {FC} from "react";
 
 type PropsType = {

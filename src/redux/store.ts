@@ -48,7 +48,7 @@ export type StoreType = {
 }
 export type ActionsTypes = ProfileActionTypes | DialogsActionTypes;
 
-let store: StoreType = {
+let store1: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -99,6 +99,5 @@ let store: StoreType = {
 }
 
 
-export default store;
+export default store1;
 //window.store = store;
-
