@@ -1,8 +1,8 @@
 import React from "react";
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
-const SEND_MESSAGE = "SEND-MESSAGE"
+import {ProfileActionTypes, profileReducer} from "./profile-reducer";
+import {DialogsActionTypes, dialogsReducer} from "./dialogs-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
+
 
 export type MessagesType = {
     id: number,
@@ -32,7 +32,7 @@ export type SidebarType = {
 export type DialogsPageType = {
     dialogs: DialogsType[],
     messages: MessagesType[],
-    newMessage:string
+    newMessage: string
 }
 export type RootStateType = {
     profilePage: ProfilePageType,
@@ -46,26 +46,7 @@ export type StoreType = {
     _callSubscriber: () => void,
     dispatch: (action: ActionsTypes) => void
 }
-export type ActionsTypes = ReturnType<typeof addPostAC > | ReturnType<typeof updateNewPostTextAC> |ReturnType<typeof updateNewMessageTextAC>|ReturnType<typeof sendMessageAC>;
-
-export const addPostAC = () => {
-    return {type: 'ADD-POST'} as const
-}
-export const updateNewPostTextAC = (text: string) => {
-    return {
-        type: "UPDATE_NEW_POST_TEXT",
-        messagePost: text
-    } as const
-}
-export const updateNewMessageTextAC = (text: string) => {
-    return {
-        type: "UPDATE-NEW-MESSAGE-TEXT",
-        newMessage: text
-    } as const
-}
-export const sendMessageAC = () => {
-    return {type: 'SEND-MESSAGE'} as const
-}
+export type ActionsTypes = ProfileActionTypes | DialogsActionTypes;
 
 let store: StoreType = {
     _state: {
@@ -90,7 +71,7 @@ let store: StoreType = {
                 {id: 2, message: "Hello"},
                 {id: 3, message: "Love you"}
             ],
-            newMessage:"Hello my friend"
+            newMessage: "Hello my friend"
         },
         sidebar: {
             friends: [
@@ -110,23 +91,10 @@ let store: StoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            const newPost: PostType = {id: 4, message: this._state.profilePage.newPostText, likesCount: 8};
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber();
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.messagePost ? action.messagePost : "";
-            this._callSubscriber();
-        }else if(action.type === UPDATE_NEW_MESSAGE_TEXT ){
-            this._state.dialogsPage.newMessage = action.newMessage ? action.newMessage:""
-            this._callSubscriber();
-        }else if(action.type === SEND_MESSAGE){
-            const message:MessagesType ={id:4, message: this._state.dialogsPage.newMessage}
-            this._state.dialogsPage.messages.push(message);
-            this._state.dialogsPage.newMessage=""
-            this._callSubscriber();
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action as ProfileActionTypes);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action as DialogsActionTypes);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+        this._callSubscriber();
     }
 }
 
