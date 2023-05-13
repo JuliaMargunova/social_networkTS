@@ -1,19 +1,17 @@
 import React from "react";
-
-export let rerenderEntireTree = () => {
-
-}
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT"
+const SEND_MESSAGE = "SEND-MESSAGE"
 
 export type MessagesType = {
     id: number,
     message: string
 }
-
 export type DialogsType = {
     id: number,
     name: string
 }
-
 export type PostType = {
     id: number,
     message: string,
@@ -31,25 +29,42 @@ export type FriendsType = {
 export type SidebarType = {
     friends: FriendsType[]
 }
-
 export type DialogsPageType = {
     dialogs: DialogsType[],
-    messages: MessagesType[]
+    messages: MessagesType[],
+    newMessage:string
 }
 export type RootStateType = {
     profilePage: ProfilePageType,
     dialogsPage: DialogsPageType,
     sidebar: SidebarType
 }
-
 export type StoreType = {
     _state: RootStateType,
     getState: () => RootStateType,
-    addPost: () => void,
-    changeMessagePost: (messagePost: string) => void,
     subscribe: (observer: () => void) => void,
-    _callSubscriber: () => void
+    _callSubscriber: () => void,
+    dispatch: (action: ActionsTypes) => void
+}
+export type ActionsTypes = ReturnType<typeof addPostAC > | ReturnType<typeof updateNewPostTextAC> |ReturnType<typeof updateNewMessageTextAC>|ReturnType<typeof addMessageAC>;
 
+export const addPostAC = () => {
+    return {type: 'ADD-POST'} as const
+}
+export const updateNewPostTextAC = (text: string) => {
+    return {
+        type: "UPDATE_NEW_POST_TEXT",
+        messagePost: text
+    } as const
+}
+export const updateNewMessageTextAC = (text: string) => {
+    return {
+        type: "UPDATE-NEW-MESSAGE-TEXT",
+        newMessage: text
+    } as const
+}
+export const sendMessageAC = () => {
+    return {type: 'SEND-MESSAGE'} as const
 }
 
 let store: StoreType = {
@@ -74,7 +89,8 @@ let store: StoreType = {
                 {id: 1, message: "hi"},
                 {id: 2, message: "Hello"},
                 {id: 3, message: "Love you"}
-            ]
+            ],
+            newMessage:"Hello my friend"
         },
         sidebar: {
             friends: [
@@ -93,15 +109,24 @@ let store: StoreType = {
     subscribe(observer: () => void) {
         this._callSubscriber = observer;
     },
-    addPost() {
-        const newPost: PostType = {id: 4, message: this._state.profilePage.newPostText, likesCount: 8};
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber();
-    },
-    changeMessagePost(messagePost: string) {
-        this._state.profilePage.newPostText = messagePost;
-        this._callSubscriber();
+    dispatch(action) {
+        if (action.type === ADD_POST) {
+            const newPost: PostType = {id: 4, message: this._state.profilePage.newPostText, likesCount: 8};
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber();
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.profilePage.newPostText = action.messagePost ? action.messagePost : "";
+            this._callSubscriber();
+        }else if(action.type === UPDATE_NEW_MESSAGE_TEXT ){
+            this._state.dialogsPage.newMessage = action.newMessage ? action.newMessage:""
+            this._callSubscriber();
+        }else if(action.type === SEND_MESSAGE){
+            const message:MessagesType ={id:4, message: this._state.dialogsPage.newMessage}
+            this._state.dialogsPage.messages.push(message);
+            this._state.dialogsPage.newMessage=""
+            this._callSubscriber();
+        }
     }
 }
 

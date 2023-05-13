@@ -19,8 +19,8 @@ const App:FC<PropsType> = (props) => {
                 <Navbar />
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/profile' element={<Profile profilePage={state.profilePage} addPost={props.store.addPost.bind(props.store)} changeMessagePost={props.store.changeMessagePost.bind(props.store)} />} />
-                        <Route path='/dialogs' element={<Dialogs messages = {state.dialogsPage.messages} dialogs={state.dialogsPage.dialogs} />} />
+                        <Route path='/profile' element={<Profile profilePage={state.profilePage} dispatch={props.store.dispatch.bind(props.store)} />} />
+                        <Route path='/dialogs' element={<Dialogs messages = {state.dialogsPage.messages} message={state.dialogsPage.newMessage} dispatch={props.store.dispatch.bind(props.store)} dialogs={state.dialogsPage.dialogs} />} />
                     </Routes>
                 </div>
             </div>
