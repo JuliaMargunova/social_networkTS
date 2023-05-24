@@ -31,7 +31,7 @@ const initialState  =  {
     ],
         newMessage: "Hello my friend"
 }
-export const dialogsReducer = (state: DialogsPageType = initialState, action: any):DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionTypes):DialogsPageType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
             state.newMessage = action.newMessage ? action.newMessage : "";

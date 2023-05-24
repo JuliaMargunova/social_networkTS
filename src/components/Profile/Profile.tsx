@@ -9,14 +9,14 @@ import {StoreType} from "../../redux/redux-store";
 type PropsType = {/*
     profilePage: ProfilePageType
     dispatch: (action: ProfileActionTypes) => void*/
-    store: StoreType
+
 }
 const Profile: FC<PropsType> = (props) => {
 
     return (
         <div>
             <ProfileInfo/>
-            <MyPostContainer store={props.store}/>
+            <MyPostContainer/>
         </div>
     )
 }

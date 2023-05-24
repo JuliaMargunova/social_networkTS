@@ -1,29 +1,31 @@
-import React, {ChangeEvent, FC, RefObject} from "react";
-import s from './MyPost.module.css';
-import Post from './Post/Post';
-import {addPostAC, PostType, ProfileActionTypes, updateNewPostTextAC} from "../../../redux/profile-reducer";
+import React, {FC, RefObject} from "react";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
 import MyPost from "./MyPost";
-import {StoreType} from "../../../redux/redux-store";
+import StoreContext from "../../../StoreContext";
 
-type PropsType = {
-    /*posts: PostType[]
-    postMessage: string
-    dispatch: (action: ProfileActionTypes) => void*/
-    store:StoreType
-}
+type PropsType = {}
 
-const MyPostContainer: FC<PropsType> = (props) => {
-    const state = props.store.getState().profilePage;
-    let newPostElement: RefObject<HTMLTextAreaElement> = React.createRef();
-
-    const addPost = () => {
-            props.store.dispatch(addPostAC())
-    }
-    const onPostChange = (text:string) => {
-        props.store.dispatch(updateNewPostTextAC(text));
-    }
+const MyPostContainer: FC<PropsType> = () => {
     return (
-        <MyPost posts={state.posts} postMessage={state.newPostText} addPost={addPost} updateNewPostText={onPostChange} />
+        <StoreContext.Consumer>
+            {
+                (store) => {
+                    const state = store.getState().profilePage;
+                    let newPostElement: RefObject<HTMLTextAreaElement> = React.createRef();
+
+                    const addPost = () => {
+                        store.dispatch(addPostAC())
+                    }
+                    const onPostChange = (text: string) => {
+                        store.dispatch(updateNewPostTextAC(text));
+                    }
+                    return <MyPost
+                        posts={state.posts}
+                        postMessage={state.newPostText}
+                        addPost={addPost}
+                        updateNewPostText={onPostChange}/>
+                }}
+        </StoreContext.Consumer>
     )
 }
 
