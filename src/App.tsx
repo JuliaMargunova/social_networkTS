@@ -7,6 +7,7 @@ import Dialogs from './components/Dialogs/Dialogs';
 import { Route, Routes } from 'react-router-dom';
 import { StoreType} from "./redux/redux-store";
 import {FC} from "react";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type PropsType = {
     store:StoreType
@@ -19,8 +20,12 @@ const App:FC<PropsType> = (props) => {
                 <Navbar />
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/profile' element={<Profile profilePage={state.profilePage} dispatch={props.store.dispatch.bind(props.store)} />} />
-                        <Route path='/dialogs' element={<Dialogs messages = {state.dialogsPage.messages} message={state.dialogsPage.newMessage} dispatch={props.store.dispatch.bind(props.store)} dialogs={state.dialogsPage.dialogs} />} />
+                        <Route path='/profile' element={<Profile store = {props.store} />} />
+                 {/*       <Route path='/profile' element={<Profile profilePage={state.profilePage} dispatch={props.store.dispatch.bind(props.store)} />} />
+*/}
+                     {/*   <Route path='/dialogs' element={<Dialogs messages = {state.dialogsPage.messages} message={state.dialogsPage.newMessage} dispatch={props.store.dispatch.bind(props.store)} dialogs={state.dialogsPage.dialogs} />} />
+*/}
+                        <Route path='/dialogs' element={<DialogsContainer store = {props.store} />} />
                     </Routes>
                 </div>
             </div>

@@ -11,7 +11,7 @@ let reducers = combineReducers(
     }
 );
 
-export type StoreType = typeof store;
-let store = createStore(reducers);
 
+let store = createStore(reducers);
+export type StoreType = typeof store;
 export default store;

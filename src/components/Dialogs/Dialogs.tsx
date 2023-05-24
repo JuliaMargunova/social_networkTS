@@ -10,12 +10,15 @@ import {
     sendMessageAC,
     updateNewMessageTextAC
 } from "../../redux/dialogs-reducer";
+import {StoreType} from "../../redux/redux-store";
 
 type PropsType ={
     dialogs:DialogsType[]
     messages:MessagesType[],
     message:string
-    dispatch:(action:DialogsActionTypes)=>void
+    sendMessageClick:()=>void,
+    updateMessage:(text:string)=>void
+
 }
 const Dialogs:FC<PropsType> = (props) => {
 
@@ -24,11 +27,11 @@ const Dialogs:FC<PropsType> = (props) => {
     const message:RefObject<HTMLTextAreaElement> = React.createRef();
     const onSendMessageClick = ()=>{
         if(message.current){
-            props.dispatch(sendMessageAC())
+            props.sendMessageClick()
         }
     }
-    const updateMessage=(e:ChangeEvent<HTMLTextAreaElement>)=>{
-        props.dispatch(updateNewMessageTextAC(e.currentTarget.value))
+    const onUpdateMessage=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+        props.updateMessage(e.currentTarget.value)
     }
     return (
         <div >
@@ -40,7 +43,7 @@ const Dialogs:FC<PropsType> = (props) => {
                     {messageElements}
                 </div>
             </div>
-            <textarea value={props.message} onChange={updateMessage} ref={message} />
+            <textarea value={props.message} onChange={onUpdateMessage} ref={message} />
             <button onClick={onSendMessageClick}>add</button>
         </div>
     )

@@ -6,7 +6,8 @@ import {addPostAC, PostType, ProfileActionTypes, updateNewPostTextAC} from "../.
 type PropsType = {
     posts: PostType[]
     postMessage: string
-    dispatch: (action: ProfileActionTypes) => void
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 
 const MyPost: FC<PropsType> = (props) => {
@@ -15,11 +16,13 @@ const MyPost: FC<PropsType> = (props) => {
 
     const addPost = () => {
         if (newPostElement.current?.value) {
-            props.dispatch(addPostAC())
+            props.addPost();
+            //props.dispatch(addPostAC())
         }
     }
     const onChangeMessage = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextAC(event.currentTarget.value));
+        //props.dispatch(updateNewPostTextAC(event.currentTarget.value));
+        props.updateNewPostText(event.currentTarget.value);
     }
     return (
         <div>
