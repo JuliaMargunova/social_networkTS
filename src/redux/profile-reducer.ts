@@ -1,5 +1,4 @@
 import React from 'react'
-
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
 export type ProfilePageType = {
@@ -21,6 +20,7 @@ const initialState = {
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionTypes): ProfilePageType => {
+    debugger
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {id: 4, message: state.newPostText, likesCount: 8};

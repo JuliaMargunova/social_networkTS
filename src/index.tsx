@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import store  from './redux/redux-store';
 import {BrowserRouter} from "react-router-dom";
-import {Provider} from "./StoreContext";
+import { Provider } from 'react-redux';
 
 let rerenderEntireTree = () => {
     ReactDOM.render(
@@ -18,7 +18,7 @@ let rerenderEntireTree = () => {
 }
 
 rerenderEntireTree();
-store.subscribe(rerenderEntireTree);
+store.subscribe(()=>{rerenderEntireTree()});
 
 /*const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

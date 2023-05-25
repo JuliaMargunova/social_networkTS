@@ -15,12 +15,14 @@ const MyPost: FC<PropsType> = (props) => {
     let newPostElement: RefObject<HTMLTextAreaElement> = React.createRef();
 
     const addPost = () => {
+        debugger
         if (newPostElement.current?.value) {
             props.addPost();
             //props.dispatch(addPostAC())
         }
     }
     const onChangeMessage = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        debugger
         //props.dispatch(updateNewPostTextAC(event.currentTarget.value));
         props.updateNewPostText(event.currentTarget.value);
     }
