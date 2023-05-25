@@ -16,7 +16,7 @@ export type DialogsType = {
     id: number,
     name: string
 }
-const initialState  =  {
+const initialState = {
     dialogs:
         [
             {id: 1, name: "Yuli",},
@@ -24,23 +24,23 @@ const initialState  =  {
             {id: 3, name: "Olga",},
             {id: 4, name: "Kat",}
         ],
-            messages: [
+    messages: [
         {id: 1, message: "hi"},
         {id: 2, message: "Hello"},
         {id: 3, message: "Love you"}
     ],
-        newMessage: "Hello my friend"
+    newMessage: "Hello my friend"
 }
-export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionTypes):DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionTypes): DialogsPageType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessage = action.newMessage ? action.newMessage : "";
-            return state;
+            return {
+                ...state,
+                newMessage: action.newMessage ? action.newMessage : ""
+            };
         case SEND_MESSAGE:
             const message: MessagesType = {id: 4, message: state.newMessage}
-            state.messages.push(message);
-            state.newMessage = ""
-            return state;
+            return {...state, messages: [...state.messages, message], newMessage: ""};
         default:
             return state;
     }
