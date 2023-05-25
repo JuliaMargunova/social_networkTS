@@ -22,8 +22,8 @@ type PropsType ={
 }
 const Dialogs:FC<PropsType> = (props) => {
 
-    const dialogsElements = props.dialogs.map((d) => <DialogItem name={d.name} id={d.id} />)
-    const messageElements = props.messages.map((m) => <Message message={m.message} />)
+    const dialogsElements = props.dialogs.map((d,index) => <DialogItem key={index} name={d.name} id={d.id} />)
+    const messageElements = props.messages.map((m,index) => <Message key={index} message={m.message} />)
     const message:RefObject<HTMLTextAreaElement> = React.createRef();
     const onSendMessageClick = ()=>{
         if(message.current){
