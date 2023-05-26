@@ -3,13 +3,9 @@ import React, {FC} from "react";
 import s from './Users.module.css';
 import userPhoto from '../../assets/images/user_icon.png';
 import {UserType} from "../../redux/users-reducer";
+import {MapDispatcPropsType, MapStatePropsType} from "./UsersContainer";
 
-type PropsType = {
-    users: UserType[],
-    follow: (idUser: number) => void,
-    unFollow: (idUser: number) => void,
-    setUsers: (users: UserType[]) => void
-}
+type PropsType = MapStatePropsType & MapDispatcPropsType
 let Users: FC<PropsType> = ({users, ...props}) => {
 
     let getUsers = () => {

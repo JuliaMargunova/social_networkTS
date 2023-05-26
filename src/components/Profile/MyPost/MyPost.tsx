@@ -2,13 +2,9 @@ import React, {ChangeEvent, FC, RefObject} from "react";
 import s from './MyPost.module.css';
 import Post from './Post/Post';
 import {addPostAC, PostType, ProfileActionTypes, updateNewPostTextAC} from "../../../redux/profile-reducer";
+import {MapDispatcPropsType, MapStatePropsType} from "./MyPostContainer";
 
-type PropsType = {
-    posts: PostType[]
-    postMessage: string
-    addPost: () => void
-    updateNewPostText: (text: string) => void
-}
+type PropsType = MapStatePropsType & MapDispatcPropsType
 
 const MyPost: FC<PropsType> = (props) => {
     let posts1 = props.posts.map((post,index) => <Post key={index} message={post.message} likesCount={post.likesCount}/>)

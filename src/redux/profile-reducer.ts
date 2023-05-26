@@ -1,10 +1,7 @@
 import React from 'react'
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
-export type ProfilePageType = {
-    posts: PostType[],
-    newPostText: string
-}
+
 export type PostType = {
     id: number,
     message: string,
@@ -15,11 +12,13 @@ const initialState = {
         {id: 1, message: "hi", likesCount: 10},
         {id: 2, message: "hello", likesCount: 12},
         {id: 3, message: "yo", likesCount: 2}
-    ],
+    ] as PostType[],
     newPostText: ""
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionTypes): ProfilePageType => {
+export type InitialStateType = typeof initialState
+
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes): InitialStateType => {
     debugger
     switch (action.type) {
         case ADD_POST:
